@@ -13,7 +13,6 @@ def chatbot():
 # 用于上下文管理储存消息的列表
 messages = []
 
-
 @app.route('/get_answer', methods=['POST'])
 def get_answer():
     # 获取请求体参数
@@ -79,4 +78,4 @@ def get_answer():
     return jsonify({'botResponse': answer})
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

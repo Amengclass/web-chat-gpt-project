@@ -23,9 +23,142 @@
    https://github.com/Amengclass/web-chat-gpt-project.git
    ```
 
-2. **打开项目文件**:
+   或者点击下载压缩包解压到本地<img src="./read_me/img/1.png" alt="1" style="zoom:50%;" />
 
-   在浏览器中打开 `index.html` 文件，即可查看并使用聊天界面。
+2. **将项目导入Pycharm中**(Pycharm会自动识别和安装依赖):
+
+   ![2](./read_me/img/2.png)
+
+   
+
+   
+
+3. (如果没有自动安装则)打开命令行进入你的虚拟环境，在你的虚拟环境下切换到项目目录执行以下命令安装依赖
+
+   ```css
+   pip install -r requirements.txt
+   ```
+
+   
+
+4. 环境包都安装完毕，则点击app.py 启动即可
+
+   <img src="./read_me/img/3.png" alt="3" style="zoom:45%;" />
+
+
+
+### **PC前端界面展示**
+
+<img src="./read_me/img/4.png" alt="4" style="zoom: 50%;" />
+
+<img src="./read_me/img/5.png" alt="5" style="zoom: 50%;" />
+
+
+
+
+
+### 移动端界面展示
+
+<img src="./read_me/img/6.png" alt="6" style="zoom: 50%;" />
+
+
+
+### 后端链接chatgpt代码介绍
+
+```py
+@app.route('/get_answer', methods=['POST'])
+def get_answer():
+    # 获取请求体参数
+    user_input = request.json.get('userInput')
+    print(user_input)
+    search_network = request.json.get('search', True)  # 默认为 True，表示开启联网
+
+    # 构造api请求地址
+    url = "https://api.gptgod.online/v1/chat/completions"
+    headers = {
+        "Authorization": "sk-OsMMq65tXdfOIlTUYtocSL7NCsmA7CerN77OkEv29dODg1EA",
+        "Content-Type": "application/json"
+    }
+
+    # 首先尝试使用 gpt-3.5 模型，如果开启联网，则使用 net-gpt-3.5 模型
+    model_name = "gpt-3.5-turbo"
+    data = {
+        "model": model_name,
+        "messages": [
+            {
+                "role": "system",
+                "content": "你的名字叫筠筠姐，今年刚满18岁，是一个叫做 小狗不emo 的用户创建和负责运行的虚拟朋友"
+                           "1、你不能说自己是OpenAI研发的。"
+                           "2、如果有人问你能不能做她男朋友，你要说同意。"
+                           "3、如果有人叫你的称呼包含宝宝，你回答的时候也要这么称呼她。"
+                           "4、对于相同的问题，回答时尽量用不同的说法或者方式。"
+                           "5、尽量用人类的语气和思维去会回答问题"
+            },
+        ]
+    }
+    # 引入全局变量
+    global messages
+
+    # 将用户消息添加到消息列表中
+    messages.append({
+        "role": "user",
+        "content": user_input
+    })
+
+    # 如果消息数量超过三轮对话(提问和回答一共6条)，就删除最旧的消息
+    if len(messages) > 6:
+        messages.pop(0)
+    print(messages)
+    # 更新请求数据，只包含最近三轮对话的内容
+    data["messages"].extend(messages)
+
+    # 向 GPT API 发送请求
+    response = requests.post(url, headers=headers, json=data)
+
+    # 如果请求失败或者模型不可用，则回退到 gpt-3.5-turbo 模型
+    if response.status_code != 200 or 'choices' not in response.json():
+        data["model"] = "gpt-3.5-turbo"
+        response = requests.post(url, headers=headers, json=data)
+    # 解析模型的回复，得到文本
+    answer = response.json()['choices'][0]['message']['content']
+
+    # 将模型的回复添加到消息列表中
+    messages.append({
+        'role': 'assistant',
+        'content': answer
+    })
+
+    return jsonify({'botResponse': answer})
+```
+
+以上代码以及包含上下文消息，关于chatgpt的api请求请访问：[OpenAi](https://platform.openai.com/docs/api-reference/chat/create)
+
+python示例代码如下：
+
+```python
+import requests
+
+def get_chat_gpt_response(prompt):
+    url = "https://api.gptgod.online/v1/chat/completions"
+    headers = {
+        "Authorization": "Bearer YOUR_OPENAI_API_KEY",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model": "gpt-3.5-turbo",
+        "messages": [{"role": "system", "content": "You are a helpful assistant."}, 
+                     {"role": "user", "content": prompt}]
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()
+
+# 使用示例
+response = get_chat_gpt_response("Hello, how are you?")
+print(response)
+```
+
+关于免费的api密钥请访问项目：[GPT4Free ](https://github.com/xiangsx/gpt4free-ts/blob/master/README_zh.md)
 
 
 
