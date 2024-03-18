@@ -27,7 +27,7 @@
 
 2. **将项目导入Pycharm中**(Pycharm会自动识别和安装依赖):
 
-   ![2](./read_me/img/2.png)
+   ![2](./read_me/img/2.png style="zoom: 50%;)
 
    
 
