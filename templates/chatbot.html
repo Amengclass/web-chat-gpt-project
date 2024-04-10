@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>18 - Your AI Assistant</title>
+    <title>18岁 - Your AI Assistant</title>
     <!-- 添加 Font Awesome 图标库链接 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -18,89 +18,6 @@
         .container {
             display: flex;
             height: 100vh;
-        }
-
-        #floating-audio-info {
-            position: fixed;
-            top: 0.5%; /* 修改此处以调整垂直位置 */
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 8px;
-            border-radius: 10px;
-            display: none;
-            z-index: 999;
-            max-width: 60vw;
-            overflow-wrap: break-word; /* 仅在超过指定宽度时换行 */
-
-            /* 使用flexbox布局 */
-            justify-content: center; /* 在水平方向上居中 */
-        }
-
-        /*---------------------------------------语音条---------------------------------------*/
-        .audio_box {
-            width: 40px;
-            height: 20px;
-            margin-right: 20px;
-            background-color: #2979ff;
-            position: relative;
-            display: flex;
-            justify-content: center; /* 在主轴上居中 */
-            align-items: center; /* 在交叉轴上居中 */
-        }
-
-        .wifi-symbol {
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            left: 50%;
-            overflow: hidden;
-            transform: rotate(135deg);
-        }
-
-        .wifi-circle {
-            border: 5px solid black;
-            border-radius: 50%;
-            position: absolute;
-        }
-
-        .first {
-            width: 5px;
-            height: 5px;
-            top: 45px;
-            left: 45px;
-        }
-
-        .second {
-            width: 20px;
-            height: 20px;
-            top: 35px;
-            left: 35px;
-            animation: fadeInOut 1.25s infinite paused; /* 初始状态暂停动画 */
-        }
-
-        .third {
-            width: 40px;
-            height: 40px;
-            top: 25px;
-            left: 25px;
-            animation: fadeInOut 1.25s infinite paused; /* 初始状态暂停动画 */
-            animation-delay: 0.1s; /* 第三个波浪线条延迟1.5秒开始，即在第二个波浪线条动画结束后开始 */
-        }
-
-        @keyframes fadeInOut {
-            0% {
-                opacity: 1;
-            }
-            1% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-
         }
 
         /*---------------------------------------侧边栏区域 -------------------------------------------*/
@@ -122,7 +39,7 @@
         }
 
         /*侧边栏区域关闭时*/
-        .left-container.active {
+        .left-container.closed {
             flex: 0 0 0; /* 设置占据宽度的15% */
             transform: translateX(0);
         }
@@ -162,305 +79,11 @@
         }
 
         .left-container1 a:hover {
-            background-color: #e5e3e3;
+            background-color: #dedcdc;
         }
 
-        /*侧边栏旁边的关闭按钮(只有在小屏幕下才会显示)*/
         .close-btn {
             display: none;
-        }
-
-        /*侧边栏的外层容器*/
-        .left-container2 {
-            display: flex;
-            flex-direction: column; /* 垂直排列元素 */
-            height: 90%;
-            position: relative;
-
-        }
-
-        .left-container3 {
-            flex: 1;
-            max-height: 95%;
-        }
-
-        .mycount-popover {
-            width: 90%;
-            height: 5.5%;
-
-            /*设置按钮*/
-            position: absolute;
-            transform: translateX(5%);
-            bottom: 0;
-            border: 1px solid black;
-            border-radius: 10px; /*圆角*/
-            background: #f5f5f5; /*背景颜色*/
-            cursor: pointer; /*靠近显示手型*/
-
-
-            /*设置按钮内文字*/
-            display: flex; /* 使用 Flexbox 布局 */
-            align-items: center; /* 文字垂直居中 */
-            justify-content: center; /* 文字水平居中 */
-            color: black; /* 设置链接文字颜色为蓝色 */
-            font-size: 16px; /* 设置文字大小为16像素 */
-        }
-
-        .mycount-popover:hover {
-            background-color: #d9147c; /* 鼠标悬停时按钮背景颜色 */
-        }
-
-        #mycount-icon {
-            width: 25px; /* 设置图标宽度 */
-            height: 25px; /* 设置图标高度 */
-            display: inline-block;
-            background-image: url('../static/chatgpt/icon/mycount.jpeg'); /* 替换为图标路径 */
-            background-size: contain; /* 图标尺寸适应 */
-            background-repeat: no-repeat; /* 防止图标重复 */
-            border-radius: 50%;
-            vertical-align: middle; /* 将图标和文字在垂直方向上居中对齐 */
-            margin-right: 5px; /* 设置图标和文本之间的右边距 */
-        }
-
-        /*弹出菜单*/
-        .mycount-menu {
-            /*调节大小*/
-            width: 100%; /*和容器一样长*/
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-
-            /*调节位置*/
-            position: absolute; /*绝对定位*/
-            bottom: 110%; /*位于组件上方*/
-            left: 0;
-            z-index: 9; /*设置层级*/
-
-            /*设置菜单内文字*/
-            display: none; /* 使用 Flexbox 布局 */
-        }
-
-        /*悬浮菜单内的菜单项*/
-        .mycount-menu a {
-            display: flex; /* 使用 Flexbox 布局 */
-            align-items: center; /* 文字垂直居中 */
-            padding: 10px;
-            margin-top: 1%;
-            margin-bottom: 1%;
-            text-decoration: none;
-            color: #333;
-        }
-
-        /*菜单项鼠标悬浮*/
-        .mycount-menu a:hover {
-            background-color: #e5e4e4;
-        }
-
-        /*菜单项内的图标*/
-        .mycount-menu a .icon-md {
-            margin-right: 5%; /* 设置图标和文本之间的右边距 */
-        }
-
-        #resource-icon {
-            margin-right: 5.7%;
-            font-weight: bold; /* 将文字加粗 */
-        }
-
-        #email {
-            margin-top: 2%;
-        }
-
-        /*---------------------------------------弹出菜单系列---------------------------------------*/
-        /* 遮罩层样式 */
-        .mycount-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
-            z-index: 9999; /* 确保遮罩层位于其他元素之上 */
-        }
-
-        /* 弹出的设置窗口 */
-        .mycount-setpopup {
-            display: none;
-            flex-direction: column; /* 子元素按垂直方向排列 */
-            position: fixed;
-            width: 40%;
-            height: 45%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 1px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            z-index: 9999; /* 确保弹出窗口位于遮罩层之上 */
-        }
-
-        /*设置窗口顶部样式*/
-        .mycount-setpopup-set-top {
-            height: 5%;
-            border-top-radius: 10px;
-            border-bottom: 1px solid #e1dede; /* 2像素宽度的黑色实线 */
-            padding: 20px;
-        }
-
-        /*顶部里的容器的样式*/
-        .mycount-setpopup-set-top-title {
-            display: flex;
-            align-items: center; /* 垂直居中对齐 */
-            justify-content: center; /* 水平居中对齐 */
-            position: relative;
-        }
-
-        /*设置窗口的设置文字*/
-        .set-text {
-            margin-right: auto; /*最左边*/
-            font-size: 18px;
-        }
-
-        /*设置窗口关闭按钮*/
-        .set-close {
-            margin-left: auto; /*最右边*/
-            display: flex;
-            background: #fff;
-            border: none;
-            opacity: 0.4; /* 40%的透明度 */
-            cursor: pointer;
-        }
-
-        .set-close:hover {
-            opacity: 0.9;
-        }
-
-        .mycount-setpopup-set-bottom {
-            flex: 1;
-            display: flex;
-            align-items: center; /* 垂直居中对齐 */
-            justify-content: center; /* 水平居中对齐 */
-        }
-
-        /*恢复默认背景*/
-        #reset-bg-btn {
-            display: block;
-            width: 99%;
-            padding: 10px;
-            background-color: rgb(232, 232, 232);
-            color: black; /* 设置按钮文本颜色 */
-            border: none;
-            border-radius: 5px;
-            font-size: 17px;
-            text-align: center;
-            cursor: pointer;
-            position: absolute;
-            bottom: 14%;
-        }
-
-        #reset-bg-btn:hover {
-            background-color: #c5c3c5; /* 鼠标悬停时按钮背景颜色 */
-        }
-
-        /*设置背景按钮*/
-        #set-bg-btn {
-            display: block;
-            width: 99%;
-            padding: 10px;
-            background-color: rgb(232, 232, 232);
-            color: black; /* 设置按钮文本颜色 */
-            border: none;
-            border-radius: 5px;
-            font-size: 17px;
-            text-align: center;
-            cursor: pointer;
-            position: absolute;
-            bottom: 1%;
-        }
-
-        #set-bg-btn:hover {
-            background-color: #c5c3c5; /* 鼠标悬停时按钮背景颜色 */
-        }
-
-        /*---------------------------------------------资源面板----------------------------------------------------*/
-        /* 弹出的设置窗口 */
-        .mycount-resource-popup {
-            display: none;
-            flex-direction: column; /* 子元素按垂直方向排列 */
-            position: fixed;
-            width: 40%;
-            height: 45%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            padding: 1px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            z-index: 9999; /* 确保弹出窗口位于遮罩层之上 */
-        }
-
-        /*设置窗口顶部样式*/
-        .mycount-resource-top {
-            height: 5%;
-            border-top-radius: 10px;
-            border-bottom: 1px solid #e1dede; /* 2像素宽度的黑色实线 */
-            padding: 20px;
-        }
-
-        /*顶部里的容器的样式*/
-        .mycount-resource-top-title {
-            display: flex;
-            align-items: center; /* 垂直居中对齐 */
-            justify-content: center; /* 水平居中对齐 */
-            position: relative;
-        }
-
-        /*设置窗口的设置文字*/
-        .resource-text {
-            margin-right: auto; /*最左边*/
-            font-size: 18px;
-        }
-
-        /*设置窗口关闭按钮*/
-        .resource-close {
-            margin-left: auto; /*最右边*/
-            display: flex;
-            background: #fff;
-            border: none;
-            opacity: 0.4; /* 40%的透明度 */
-            cursor: pointer;
-        }
-
-        .resource-close:hover {
-            opacity: 0.9;
-        }
-
-        .mycount-resource-bottom {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* 垂直居中对齐 */
-            justify-content: center; /* 水平居中对齐 */
-        }
-
-        .mycount-resource-bottom a {
-            width: 93%;
-            border-radius: 10px;
-            background-color: rgb(239, 239, 239);
-            display: flex; /* 使用 Flexbox 布局 */
-
-            justify-content: center;
-            padding: 10px;
-            margin-top: 1%;
-            margin-bottom: 1%;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .mycount-resource-bottom a:hover {
-            background-color: #dadada;
         }
 
         /*----------------------------------------------侧边栏区域结束--------------------------------------------------*/
@@ -611,27 +234,10 @@
             position: relative;
             left: 1.2vw;
             margin-right: 0.5vw;
-            margin-bottom: 1.5%;
             border-radius: 0 15px 15px 15px;
+
             display: inline-block; /* 容器根据内容自适应 */
         }
-
-        /*设置用户消息框，编辑图标初始隐藏*/
-        .icon.fas.fa-pen {
-            display: none;
-            position: absolute; /* 设置为绝对定位 */
-        }
-
-        /*在用户消息框区域悬停时出现笔图标*/
-        .user-message:hover i.icon.fas.fa-pen {
-            display: flex;
-        }
-
-        .icon.fas.fa-pen:hover {
-            display: flex;
-            cursor: pointer; /* 悬停时改变鼠标指针样式为手型 */
-        }
-
 
         /*用户消息框*/
         .user-message p {
@@ -679,7 +285,6 @@
             background-color: #dedcdc; /* 悬停时改变背景颜色 */
         }
 
-        /*对话条的图标*/
         .icon {
             font-size: 21px;
             margin-right: 5px;
@@ -688,8 +293,8 @@
         /*-------------------------------顶部导航栏样式-------------------*/
         .top-navbar {
             display: none; /*一开始隐藏*/
-            background-color: #eaeaea;
-            border: 1px solid #c7c6c6;
+            background-color: #fdfcfc;
+            border: 1px solid #cecccc;
             position: relative;
             top: 0;
             left: 0;
@@ -722,40 +327,11 @@
             top: 25%;
         }
 
-        /*------------------------音乐列表部分-------------------*/
-        /* 可选的样式，用于美化音乐列表 */
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+        /*------------------------顶部导航栏结束-------------------*/
 
-        li {
-            margin-bottom: 5px; /*音乐列表之间的间隔*/
-            cursor: pointer; /* 鼠标指针样式变为手型 */
-        }
 
         /*----------------------------------------------以下是样式适配手机区域--------------------------------------------------*/
         @media screen and (max-width: 768px) {
-            /*---------------------------------修改颜色-------------------*/
-            body {
-                background-color: rgb(245, 245, 245);
-            }
-
-            .message p {
-                color: black;
-            }
-
-            .bot-message p {
-                background: white;
-                left: 4.5%;
-                margin-right: 5%;
-            }
-
-            .user-message p {
-                background: rgb(150 237 107);
-            }
-
-            /*--------------------------------------------------------------*/
             /* 覆盖层样式 */
             .overlay {
                 position: fixed;
@@ -764,7 +340,7 @@
                 width: 100%;
                 height: 100%;
                 background: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
-                z-index: 8; /* 位于左边容器下面但在其他内容上面 */
+                z-index: 998; /* 位于左边容器下面但在其他内容上面 */
                 display: none; /* 初始状态下隐藏 */
                 transition: transform 0.3s ease;
             }
@@ -774,13 +350,13 @@
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                z-index: 8; /* 设置左边区域层级 */
+                z-index: 998; /* 设置左边区域层级 */
 
                 transition: transform 0.5s ease;
                 transform: translateX(-100%)
             }
 
-            .left-container.active {
+            .left-container.open {
                 transform: translateX(0); /* 将左侧栏移回屏幕内 */
             }
 
@@ -789,25 +365,6 @@
                 background: #fdfcfc;
                 flex: 0.85; /*这是调节侧边栏的比例大小的*/
             }
-
-            .mycount-popover {
-                bottom: 2%;
-            }
-
-            /*设置面板*/
-            .mycount-setpopup {
-                width: 85%;
-            }
-
-            /*资源面板*/
-            .mycount-resource-popup {
-                width: 85%;
-            }
-
-            .audio_box {
-                background: white;
-            }
-
 
             /*---------------------------侧边栏关闭按钮--------------------*/
             .close-btn {
@@ -823,7 +380,7 @@
                 /*左边距和上边距*/
                 margin-left: .5rem;
                 margin-top: 0.85rem;
-                z-index: 9;
+                z-index: 999;
             }
 
             .close-btn:hover {
@@ -859,115 +416,15 @@
             /*对话框*/
             .message {
                 margin-left: 1vw;
+                margin-right: 5.5vw;
             }
-
-            /*设置机器人对话框*/
-            .bot-message {
-                margin-right: 6.5vw;
-            }
-
-            /*-----------------------------------------重新设置用户消息框-----------------------------------------*/
-            /*隐藏用户标识文本：你*/
-            .message.user-message span {
-                display: none;
-            }
-
-
-            /*重新设置用户的消息框元素的位置*/
-            .user-message {
-                text-align: right; /*设置里边的元素靠右*/
-            }
-
-            /*设置用户消息框，编辑图标初始隐藏*/
-            .icon.fas.fa-pen {
-                right: 7%;
-            }
-
-            /*用户消息框改为右上角是尖角*/
-            .user-message p {
-                border-radius: 15px 0 15px 15px;
-                margin-right: 4.5%;
-                text-align: left; /* 文本左对齐 */
-            }
-
-            /*更改用户消息图标在右侧*/
-            .icon.fas.fa-user {
-                position: absolute;
-                right: 1.8%;
-            }
-
-            /*设置用户消息框，编辑图标显示*/
-            .icon.fas.fa-pen {
-                display: flex;
-            }
-
-            /*---------------------------------------------------------------------------------------------------*/
         }
 
     </style>
 </head>
 <body>
 <div class="container">
-    <div id="floating-audio-info"></div>
-
     <div class="overlay" id="overlay"></div>
-
-    <div class="mycount-overlay" id="mycount-overlay"></div>
-
-    <!--资源弹出菜单-->
-    <div class="mycount-resource-popup" id="mycount-resource-popup">
-        <div class="mycount-resource-top" id="mycount-resource-top">
-            <div class="mycount-resource-top-title">
-                <span class="resource-text">
-                资源列表
-                </span>
-                <!--关闭按钮-->
-                <button class="resource-close" onclick="togglePopup('resource-close')">
-                    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.34315 6.34338L17.6569 17.6571M17.6569 6.34338L6.34315 17.6571" stroke="currentColor"
-                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div class="mycount-resource-bottom" id="mycount-resource-bottom">
-            <a href="http://47.96.177.71:5000">
-                老年人日常服务
-            </a>
-            <a href="http://47.96.177.71:5000/video1">
-                免vip视频观影网站
-            </a>
-            <a href="http://47.96.177.71:5000/music">
-                我爱周杰伦！
-            </a>
-        </div>
-    </div>
-
-
-    <!--设置按钮弹出菜单-->
-    <div class="mycount-setpopup" id="mycount-setpopup">
-        <div class="mycount-setpopup-set-top" id="mycount-setpopup-settop">
-            <div class="mycount-setpopup-set-top-title">
-                <span class="set-text">
-                设置
-                </span>
-                <!--关闭按钮-->
-                <button class="set-close" onclick="togglePopup('set-close')">
-                    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.34315 6.34338L17.6569 17.6571M17.6569 6.34338L6.34315 17.6571" stroke="currentColor"
-                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div class="mycount-setpopup-set-bottom" id="mycount-setpopup-setbottom">
-            <button id="reset-bg-btn" onclick="setBackground('reset')">恢复默认背景</button>
-            <!-- 添加设置背景的按钮-->
-            <button id="set-bg-btn" onclick="setBackground('set')">设置背景图片</button>
-        </div>
-    </div>
-
-
     <!--左边会话区域-->
     <div class="left-container" id="left-container" onclick="handleClick(event)">
         <div class="left-container1" id="left-container1">
@@ -980,59 +437,21 @@
                 </a>
             </div>
             <div class="left-container2" id="left-container2">
-                <div class="left-container3" id="left-container3">
-                    <a href="#">首页
-                        <button class="threed-btn"
-                                data-state="closed">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 class="icon-md">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12ZM10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12ZM17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12Z"
-                                      fill="currentColor"></path>
-                            </svg>
-                        </button>
-                    </a>
-                    <a href="#">产品</a>
-                    <a href="#">关于我们</a>
-                    <a href="#">联系我们</a>
-                </div>
-                <div class="mycount-popover" id="mycount-popover" onclick="showMenu()">
-                    <span id="mycount-icon"></span>
-                    小狗不emo
-                    <div class="mycount-menu" id="mycount-menu">
-                        <a id="resource-btn" onclick="togglePopup('resource-btn')">
-                            <svg id="resource-icon" width="22" height="22" xmlns="http://www.w3.org/2000/svg"
-                                 viewBox="0 0 512 512">
-                                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                                <path d="M8 266.4C10.3 130.6 105.4 34 221.8 18.3c138.8-18.6 255.6 75.8 278 201.1 21.3 118.8-44 230-151.6 274-9.3 3.8-14.4 1.7-18-7.7q-26.7-69.5-53.4-139c-3.1-8.1-1-13.2 7-16.8 24.2-11 39.3-29.4 43.3-55.8a71.5 71.5 0 0 0 -64.5-82.2c-39-3.4-71.8 23.7-77.5 59.7-5.2 33 11.1 63.7 41.9 77.7 9.6 4.4 11.5 8.6 7.8 18.4q-26.9 69.9-53.7 139.9c-2.6 6.9-8.3 9.3-15.5 6.5-52.6-20.3-101.4-61-130.8-119-24.9-49.2-25.2-87.7-26.8-108.7zm20.9-1.9c.4 6.6 .6 14.3 1.3 22.1 6.3 71.9 49.6 143.5 131 183.1 3.2 1.5 4.4 .8 5.6-2.3q22.4-58.7 45-117.3c1.3-3.3 .6-4.8-2.4-6.7-31.6-19.9-47.3-48.5-45.6-86 1-21.6 9.3-40.5 23.8-56.3 30-32.7 77-39.8 115.5-17.6a91.6 91.6 0 0 1 45.2 90.4c-3.6 30.6-19.3 53.9-45.7 69.8-2.7 1.6-3.5 2.9-2.3 6q22.8 58.8 45.2 117.7c1.2 3.1 2.4 3.8 5.6 2.3 35.5-16.6 65.2-40.3 88.1-72 34.8-48.2 49.1-101.9 42.3-161-13.7-117.5-119.4-214.8-255.5-198-106.1 13-195.3 102.5-197.1 225.8z"/>
-                            </svg>
-                            资源
-                        </a>
-                        <a id="my18">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg" class="icon-md" id=icn-md>
-                                <path d="M10.663 6.3872C10.8152 6.29068 11 6.40984 11 6.59007V8C11 8.55229 11.4477 9 12 9C12.5523 9 13 8.55229 13 8V6.59007C13 6.40984 13.1848 6.29068 13.337 6.3872C14.036 6.83047 14.5 7.61105 14.5 8.5C14.5 9.53284 13.8737 10.4194 12.9801 10.8006C12.9932 10.865 13 10.9317 13 11V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V11C11 10.9317 11.0068 10.865 11.0199 10.8006C10.1263 10.4194 9.5 9.53284 9.5 8.5C9.5 7.61105 9.96397 6.83047 10.663 6.3872Z"
-                                      fill="currentColor"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                      d="M4 5V19C4 20.6569 5.34315 22 7 22H19C19.3346 22 19.6471 21.8326 19.8325 21.5541C20.0179 21.2755 20.0517 20.9227 19.9225 20.614C19.4458 19.4747 19.4458 18.5253 19.9225 17.386C19.9737 17.2637 20 17.1325 20 17V3C20 2.44772 19.5523 2 19 2H7C5.34315 2 4 3.34315 4 5ZM6 5C6 4.44772 6.44772 4 7 4H18V16H7C6.64936 16 6.31278 16.0602 6 16.1707V5ZM7 18H17.657C17.5343 18.6699 17.5343 19.3301 17.657 20H7C6.44772 20 6 19.5523 6 19C6 18.4477 6.44772 18 7 18Z"
-                                      fill="currentColor"></path>
-                            </svg>
-                            自定义18
-                        </a>
-                        <a id="set-btn" onclick="togglePopup('set-btn')">
-                            <!--设置齿轮图标-->
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg" class="icon-md" id="icon-md">
-                                <path d="M11.6439 3C10.9352 3 10.2794 3.37508 9.92002 3.98596L9.49644 4.70605C8.96184 5.61487 7.98938 6.17632 6.93501 6.18489L6.09967 6.19168C5.39096 6.19744 4.73823 6.57783 4.38386 7.19161L4.02776 7.80841C3.67339 8.42219 3.67032 9.17767 4.01969 9.7943L4.43151 10.5212C4.95127 11.4386 4.95127 12.5615 4.43151 13.4788L4.01969 14.2057C3.67032 14.8224 3.67339 15.5778 4.02776 16.1916L4.38386 16.8084C4.73823 17.4222 5.39096 17.8026 6.09966 17.8083L6.93502 17.8151C7.98939 17.8237 8.96185 18.3851 9.49645 19.294L9.92002 20.014C10.2794 20.6249 10.9352 21 11.6439 21H12.3561C13.0648 21 13.7206 20.6249 14.08 20.014L14.5035 19.294C15.0381 18.3851 16.0106 17.8237 17.065 17.8151L17.9004 17.8083C18.6091 17.8026 19.2618 17.4222 19.6162 16.8084L19.9723 16.1916C20.3267 15.5778 20.3298 14.8224 19.9804 14.2057L19.5686 13.4788C19.0488 12.5615 19.0488 11.4386 19.5686 10.5212L19.9804 9.7943C20.3298 9.17767 20.3267 8.42219 19.9723 7.80841L19.6162 7.19161C19.2618 6.57783 18.6091 6.19744 17.9004 6.19168L17.065 6.18489C16.0106 6.17632 15.0382 5.61487 14.5036 4.70605L14.08 3.98596C13.7206 3.37508 13.0648 3 12.3561 3H11.6439Z"
-                                      stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
-                                <circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="2"></circle>
-                            </svg>
-                            设置
-                        </a>
-                        <a id="email" href="http://47.96.177.71:5000/email">点击这里给小狗哥发邮件</a>
-                    </div>
-                </div>
+                <a href="#">首页
+                    <button class="threed-btn"
+                            data-state="closed">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             class="icon-md">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12ZM10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12ZM17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12Z"
+                                  fill="currentColor"></path>
+                        </svg>
+                    </button>
+
+                </a>
+                <a href="#">产品</a>
+                <a href="#">关于我们</a>
+                <a href="#">联系我们</a>
             </div>
         </div>
         <!-- 关闭按钮 -->
@@ -1062,11 +481,10 @@
                 <div class="right-container3" id="right-container3">
                     <div class="chat-box" id="chat-box">
                         <div class="message bot-message" style="margin-top: 8%;">
-                            <i class="icon fas fa-robot"></i>18
+                            <i class="icon fas fa-robot"></i>筠筠姐
                             <br>
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好！我叫18，是小狗不emo创建和负责运行的虚拟伙伴。您可以随时和我聊天或者让我为您唱歌。
-                                请告诉我您想听的歌曲，我将为您演唱！<br><span style="color: red;">格式：歌手名#歌名&nbsp;&nbsp;&nbsp;例：周杰伦#稻香</span>
-                            </p>
+                            <p>Hello!
+                                作为18岁的筠筠姐，我充满自豪地说，我已经在生活中学习了许多知识，并且掌握了琴棋书画等多种技能。您可以询问我一些问题，我会尽我所能为您解答！</p>
                         </div>
                     </div>
                 </div>
@@ -1079,391 +497,12 @@
                             class="fas fa-paper-plane"></i>
                     </button>
                 </div>
-                <span id="ask_dog">如有问题请反馈 小狗哥，QQ:694955297</span>
+                <span>如有问题请反馈 狗哥，QQ:694955297</span>
             </div>
         </div>
     </div>
 </div>
 <script>
-    /*--------------------------------------------页面背景------------------------------------------*/
-    document.addEventListener("DOMContentLoaded", function () {
-        fetch('/chatbot/background')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.background_path);
-                document.body.style.backgroundImage = `url('${data.background_path.replace(/\\/g, '/')}')`;
-                document.body.style.backgroundSize = 'contain'; // 自动裁剪以适合屏幕
-            })
-            .catch(error => console.error('Error:', error));
-    });
-
-    /*------------------------------------------显示悬浮菜单-------------------------------------------*/
-    var mycount_popover = document.getElementById("mycount-popover");
-    var mycount_menu = document.getElementById("mycount-menu");
-    var mycount_overlay = document.getElementById("mycount-overlay");
-    var mycount_setpopup = document.getElementById("mycount-setpopup");
-    var mycount_set_btn = document.getElementById("set-btn");
-    var mycount_resourcepopup = document.getElementById('mycount-resource-popup');
-    var mycount_resource_btn = document.getElementById('resource-btn');
-
-    var leftcontainer = document.getElementById("left-container");
-    var set_close = document.getElementById("set-close");
-
-
-    /*设置点击非区域则关闭*/
-    document.addEventListener("click", function (event) {
-        if (mycount_menu.style.display === "block" && !mycount_menu.contains(event.target) && !mycount_popover.contains(event.target)) {
-            mycount_menu.style.display = "none";
-        }
-        if (mycount_setpopup.style.display === "flex" && !mycount_setpopup.contains(event.target) && !mycount_set_btn.contains(event.target)) {
-            mycount_overlay.style.display = "none";
-            mycount_setpopup.style.display = "none";
-        }
-        if (mycount_resourcepopup.style.display === "flex" && !mycount_resourcepopup.contains(event.target) && !mycount_resource_btn.contains(event.target)) {
-            mycount_overlay.style.display = "none";
-            mycount_resourcepopup.style.display = "none";
-        }
-    });
-
-    /*悬浮菜单*/
-    function showMenu() {
-        mycount_menu.style.display = mycount_menu.style.display === "block" ? "none" : "block";
-    }
-
-    /*悬浮菜单的菜单项对应的悬浮菜单*/
-    function togglePopup(mode) {
-        console.log(mode)
-        if (mode === 'set-btn' || mode === 'set-close') {
-            if (mycount_overlay.style.display === 'flex' && mycount_setpopup.style.display === 'flex') {
-                mycount_overlay.style.display = 'none';
-                mycount_setpopup.style.display = 'none';
-            } else {
-                mycount_overlay.style.display = 'flex';
-                mycount_setpopup.style.display = 'flex';
-            }
-        }
-        if (mode === 'resource-btn' || mode === 'resource-close') {
-            if (mycount_resourcepopup.style.display === 'flex') {
-                mycount_overlay.style.display = 'none';
-                mycount_resourcepopup.style.display = 'none';
-            } else {
-                mycount_overlay.style.display = 'flex';
-                mycount_resourcepopup.style.display = 'flex';
-            }
-        }
-
-    }
-
-    /*------------------------------------------设置背景图片-------------------------------------------*/
-    function setBackground(mode) {
-        if (mode === 'reset') {
-            fetch('/chatbot/Isbackground',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json' // 设置请求头
-                    },
-                    body: JSON.stringify({ // 将请求体数据转换为 JSON 字符串{
-                        mode: mode
-                    })
-                }).then(response => response.json())
-                .then(data => {
-                    console.log(data.background_path);
-
-                })
-                .catch(error => console.error('Error:', error));
-
-            document.body.style.background = 'rgb(245, 245, 245)';
-            //关闭当前打开的界面回到聊天页
-            mycount_overlay.style.display = "none";
-            mycount_setpopup.style.display = "none";
-
-            leftcontainer.classList.contains('active') ? toggleSidebar() : null;
-        } else {
-            // 创建一个input元素用于上传文件
-            var input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*'; // 限制上传文件类型为图片
-            input.onchange = function (event) {
-                /*修改底部提示文字颜色*/
-                var dogspanElement = document.getElementById('ask_dog');
-                var file = event.target.files[0];
-                /*封装*/
-                const formData = new FormData();
-                formData.append('file', file);
-                // 发送图片数据到后端
-                sendImageToServer(formData);
-
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    // 将上传的图片设置为背景图像
-                    document.body.style.backgroundImage = 'url(' + e.target.result + ')';
-                    document.body.style.backgroundSize = 'contain'; // 自动裁剪以适合屏幕
-                    //document.body.style.backgroundRepeat = 'repeat'; // 禁止重复平铺
-
-                    //关闭当前打开的界面回到聊天页
-                    mycount_overlay.style.display = "none";
-                    mycount_setpopup.style.display = "none";
-
-                    leftcontainer.classList.contains('active') ? toggleSidebar() : null;
-                    dogspanElement.style.color = "black";
-                    dogspanElement.style.fontWeight = "bold"; // 设置文字加粗
-
-                    Isbackground = true;
-                }
-                reader.readAsDataURL(file);
-
-
-            };
-            // 模拟点击上传按钮
-            input.click();
-        }
-    }
-
-
-    function sendImageToServer(formData) {
-        /**
-         * 将图片数据发送到服务器端的函数
-         * @param {string} imageData - 包含图片数据的 Data URL 字符串
-         */
-        console.log(formData.get('file'))
-        // 使用Fetch API发送图片数据到服务器
-        fetch('/chatbot/background', {
-            method: 'POST',
-            body: formData,
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Image uploaded successfully');
-                } else {
-                    console.error('Failed to upload image');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    /*----------------------------------------------语音条部分-------------------------------------*/
-    function showAudioList(mode, singer, audioList) {
-        /**
-         * 显示音乐列表函数
-         * 该函数用于在页面中创建并显示一个包含音乐列表的容器。
-         * 音乐列表中包含一组示例音乐名字，用户可以点击列表中的歌曲名字进行播放。
-         * 函数创建一个包含标题和音乐列表的容器，并将其添加到页面中。
-         * @returns {HTMLDivElement} 返回一个包含音乐列表的容器的 HTMLDivElement 对象。
-         */
-
-            // 创建一个 div 容器
-        var musicContainer = document.createElement("div");
-        musicContainer.id = "musicContainer"; // 设置容器的 id
-        musicContainer.style.textAlign = "center"; // 设置容器居中
-        if (mode === 'singer is sure') {
-            // 创建标题元素并添加到容器中
-            var title = document.createElement("h3");
-            title.textContent = "请点击您想听的歌曲名字";
-            title.style.marginTop = "10px"// 设置标题上方留白
-            title.style.marginBottom = "5px"; // 设置标题下方留白
-            musicContainer.appendChild(title);
-
-            // 创建音乐列表容器并添加到容器中
-            var audioListContainer = document.createElement("div");
-            audioListContainer.id = "audioListContainer";
-            musicContainer.appendChild(audioListContainer);
-
-            // 创建音乐列表
-            var ul = document.createElement("ul");
-            audioList.then(data => {
-                data.fileNames.forEach(fileName => {
-                    var li = document.createElement("li");
-                    li.textContent = fileName;
-                    li.addEventListener("click", function () {
-                        sendAudio(singer, fileName);
-                    });
-                    ul.appendChild(li);
-                });
-            })
-        } else {
-            // 创建标题元素并添加到容器中
-            var title = document.createElement("h3");
-            title.textContent = "请点击您想听的歌单";
-            title.style.marginTop = "10px"// 设置标题上方留白
-            title.style.marginBottom = "5px"; // 设置标题下方留白
-            musicContainer.appendChild(title);
-
-            // 创建音乐列表容器并添加到容器中
-            var audioListContainer = document.createElement("div");
-            audioListContainer.id = "audioListContainer";
-            musicContainer.appendChild(audioListContainer);
-
-            // 创建音乐列表
-            var ul = document.createElement("ul");
-            audioList.then(data => {
-                data.fileNames.forEach(fileName => {
-                    var li = document.createElement("li");
-                    li.textContent = fileName;
-                    li.addEventListener("click", function () {
-                        /*  如果是本地运行则用这两个，因为windos是以 \ 分割路径，而linux是用 \分割路径
-                       let audiolist = findFileName("singer is sure", singer + '\\' + fileName);
-                       let musiccontainer  = showAudioList('singer is sure', singer+ '\\' +fileName, audiolist);
-                       */
-                        //部署到linux服务器用这个
-                        let audiolist = findFileName("singer is sure", singer + '/' + fileName, '');
-                        let musiccontainer = showAudioList('singer is sure', singer + '/' + fileName, audiolist);
-                        /*先显示机器人图标*/
-                        let messageDiv_bot = appendMessage_bot("bot");
-                        /*创建聊天框*/
-                        messageDiv_bot.appendChild(musiccontainer)
-                    });
-                    ul.appendChild(li);
-                });
-            })
-        }
-        // 将音乐列表添加到音乐列表容器中
-        audioListContainer.appendChild(ul);
-
-        /*设置音乐列表的样式——避免自定义背景时看不清*/
-        musicContainer.style.borderRadius = '15px';//设置圆角
-        musicContainer.style.backgroundColor = 'rgba(255, 255, 255, 0.65)';// 设置容器的背景颜色为白色，同时设置透明度为65%
-        return musicContainer;
-    }
-
-
-    var audioIDCounter = 1; // 定义一个全局变量，用于跟踪音频条目的ID
-    function sendAudio(singer, file_name) {
-        /**
-         * 发送音频消息函数
-         * 该函数用于向聊天界面中发送一个包含音频播放器的音频消息。
-         * 每个音频消息都包含一个唯一的ID，用于标识该消息中的音频组件。
-         * @param {string} songName - 歌曲名称，用于构建音频组件的src属性和生成唯一的ID。
-         */
-        /*先显示机器人图标*/
-        var messageDiv_bot = appendMessage_bot("bot");
-        console.log(singer, file_name);
-        // 生成音频组件的ID
-        var id = audioIDCounter + "." + file_name;
-        /*创建聊天框*/
-        var messageParagraph_bot = document.createElement("p"); // 创建对话条
-        messageParagraph_bot.id = "messageParagraph:" + id;
-        messageParagraph_bot.onclick = function () {
-            playAudio(id); // 将播放时间绑定到语音条上
-        };
-        messageParagraph_bot.style.cursor = "pointer";
-        messageDiv_bot.appendChild(messageParagraph_bot); // 将语音条加入到聊天框里
-        // 创建并添加歌曲信息元素
-        messageParagraph_bot.insertAdjacentHTML('afterend', `<span style="font-size: 12px;">${file_name}</span>`);
-
-        console.log("../static/chatgpt/resource/" + singer + "/audio/" + file_name)
-        //将动画以及音频组件加入这个语音条
-        messageParagraph_bot.innerHTML = `
-    <div class="audio_box" id="audio_box_${id}" data-is-animating="false">
-        <audio id="${id}" src="../static/chatgpt/resource/${singer}/audio/${file_name}"></audio>
-        <div class="wifi-symbol">
-            <div class="wifi-circle first"></div>
-            <div class="wifi-circle second"></div>
-            <div class="wifi-circle third"></div>
-        </div>
-    </div>`;
-
-        scrollChatToBottom(); // 滚动到聊天框底部
-        // 增加计数器以准备为下一个音频组件生成ID
-        audioIDCounter++;
-    }
-
-
-    function findFileName(mode, singer, songName) {
-        /**
-         * 通过向后端发送请求，查找包含指定关键字的文件名字。
-         * @param {string} folderPath - 要搜索的文件夹路径。
-         * @param {string} keyword - 要查找的关键字。
-         * @returns {Promise<Array<string>>} 符合条件的文件名字数组。
-         */
-        return fetch('/find_filename', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({mode, singer, songName})
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                return data
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                return [];
-            });
-    }
-
-
-    var currentPlayingAudio = null;   //用于标记当前是否有音频再播放
-    function playAudio(id) {
-        /**
-         * 播放音频函数
-         * 该函数用于控制音频的播放和暂停
-         * @param {string} id - 音频元素的ID，用于定位要播放的音频。
-         */
-        var audio = document.getElementById(id);
-        var floatingAudioInfo = document.getElementById('floating-audio-info');
-
-        console.log(id)
-        console.log(audio)
-        var audioBox = document.getElementById('audio_box_' + id);
-        var secondCircle = audioBox.querySelector('.second');
-        var thirdCircle = audioBox.querySelector('.third');
-        var isAnimating = audioBox.dataset.isAnimating === "true";
-
-        if (secondCircle && thirdCircle) {
-            // 暂停当前正在播放的歌曲（如果有）
-            if (currentPlayingAudio && currentPlayingAudio !== audio) {
-                var currentAudioBox = document.getElementById('audio_box_' + currentPlayingAudio.id);
-                var currentSecondCircle = currentAudioBox.querySelector('.second');
-                var currentThirdCircle = currentAudioBox.querySelector('.third');
-                currentSecondCircle.style.animationPlayState = 'paused';
-                currentThirdCircle.style.animationPlayState = 'paused';
-                currentPlayingAudio.pause();
-                currentAudioBox.dataset.isAnimating = "false";
-            }
-
-            if (isAnimating) {
-                secondCircle.style.animationPlayState = 'paused';
-                thirdCircle.style.animationPlayState = 'paused';
-
-                audio.pause();
-            } else {
-                secondCircle.style.animationPlayState = 'running';
-                thirdCircle.style.animationPlayState = 'running';
-                audio.play();
-                // 更新全局变量以标记当前正在播放的音频
-                currentPlayingAudio = audio;
-            }
-
-            audioBox.dataset.isAnimating = isAnimating ? "false" : "true";
-
-
-            // 当音频播放时显示悬浮组件并显示音频文件名
-            audio.addEventListener('play', function () {
-                //id是 1.周杰伦-半岛铁盒.mp3 格式，用正则表达式只留下周杰伦-半岛铁盒
-                floatingAudioInfo.textContent = '正在播放：' + audio.id.replace(/^\d+\.(.*?)\.mp3$/, '$1');
-                floatingAudioInfo.style.display = 'flex';
-            });
-            // 当音频暂停时隐藏悬浮组件
-            audio.addEventListener('pause', function () {
-                floatingAudioInfo.style.display = 'none';
-            });
-
-            audio.addEventListener('ended', function () {
-                secondCircle.style.animationPlayState = 'paused';
-                thirdCircle.style.animationPlayState = 'paused';
-                audioBox.dataset.isAnimating = "false";
-                currentPlayingAudio = null; // 当前歌曲播放结束后将全局变量重置为 null
-            });
-        }
-    }
-
-
-    /*------------------------------------------机器人回答部分-----------------------------------------------------*/
     let isAnswering = false; /*用来标记机器人是否正在回答问题的变量*/
     document.addEventListener("DOMContentLoaded", function () {
         checkInputValidity();  //检查输入框状态
@@ -1523,84 +562,38 @@
                 sendButton.innerHTML = '<i class="fas fa-stop"></i>'; //改图标
 
                 /*先显示机器人图标*/
-                var messageDiv_bot = appendMessage_bot("bot");
-                /*创建聊天框*/
-                var messageParagraph_bot = document.createElement("p"); // Create paragraph for bot response
-                messageParagraph_bot.style.backgroundColor = "#dc5a3d";
+                var messageDiv_ai = appendMessage_ai("bot");
+                var messageParagraph_ai = document.createElement("p"); // Create paragraph for bot response
+                messageDiv_ai.appendChild(messageParagraph_ai); // Append paragraph to message div
 
-                // 定义匹配规则的正则表达式
-                let regex = /(.+)#(.*)/;
-                // 使用正则表达式匹配用户输入
-                let match = userInput.match(regex);
-                if (match) {
-                    // 如果匹配成功，提取歌曲名称
-                    let singer = match[1];  // audio
-                    let songName = match[2];    // 稻香
-
-                    console.log("singer:" + singer, "song:" + songName);
-                    if (singer.includes('张逸筠') || singer.includes('筠筠姐')) {
-                        singer = "张逸筠";
-                    }
-                    var audioListContainer;
-                    if (singer === '歌单') {
-                        audioListContainer = showAudioList("singer is not sure", singer, findFileName("singer is not sure", singer, songName));
-                        console.log(audioListContainer)
-                    } else {
-                        audioListContainer = showAudioList("singer is sure", singer, findFileName("singer is sure", singer, songName));
-                        console.log(audioListContainer)
-                    }
-                    messageDiv_bot.appendChild(audioListContainer);
-                    isAnswering = false; /*表示机器人回答完毕*/
-
-                } else if (userInput.includes("听歌") || userInput.includes("音乐") || userInput.includes("歌") || userInput.includes("唱歌")) {
-                    messageParagraph_bot.textContent = "请告诉我您想听什么歌曲？ (指令格式：歌手#歌曲名  例：周杰伦#稻香";
-                    messageDiv_bot.appendChild(messageParagraph_bot); // Append paragraph to message div
-                } else {
-                    messageParagraph_bot.textContent = "正在思考中..."; //给用户即时反馈
-                    messageDiv_bot.appendChild(messageParagraph_bot); // Append paragraph to message div
-
-                    scrollChatToBottom(); // 滚动到聊天框底部
-                    try {
-                        /*逐字显示机器人内容*/
-                        var index = 0;
-                        var botResponse = await generateBotResponse(userInput);
-                        console.log(botResponse);
-                        if (isAnswering) { //如果用户没有点击停止按钮
-                            if (botResponse === "语音返回成功") {
-                                console.log("展示音乐列表");
-                                /*var audioListContainer = showAudioList(singer, song);
-                                messageDiv_bot.appendChild(audioListContainer);
-                                scrollChatToBottom(); // 滚动到聊天框底部.*/
+                scrollChatToBottom(); // 滚动到聊天框底部
+                try {
+                    /*逐字显示机器人内容*/
+                    var index = 0;
+                    var botResponse = await generateBotResponse(userInput);
+                    if (isAnswering) { //如果用户没有点击停止按钮
+                        displayInterval = setInterval(function () {
+                            if (index < botResponse.length) {
+                                messageParagraph_ai.textContent += botResponse.charAt(index);
+                                index++;
                             } else {
-                                messageParagraph_bot.textContent = ''; // 清空文本内容
-                                if (window.matchMedia("(max-width: 768px)").matches) {
-                                    messageParagraph_bot.style.backgroundColor = "white"; //恢复蓝色背景
-                                } else {
-                                    messageParagraph_bot.style.backgroundColor = "#2979ff"; //恢复蓝色背景
-                                }
-                                displayInterval = setInterval(function () {
-                                    if (index < botResponse.length) {
-                                        messageParagraph_bot.textContent += botResponse.charAt(index);
-                                        index++;
-                                    } else {
-                                        clearInterval(displayInterval); /*停止定时器*/
-                                        scrollChatToBottom(); // 滚动到底部
-                                    }
-                                }, 50); // Adjust the interval duration as needed
-                            }
-                        }
-                        isAnswering = false; /*表示机器人回答完毕*/
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
-                }
-                // 修改发送按钮图标为发送图标
-                sendButton.style.backgroundColor = "#4caf50";  //改图标为绿颜色
-                sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>'; //改回发送图标
-                checkInputValidity(); /*检查输入框状态*/
-                scrollChatToBottom(); // 滚动到底部
-            }
+                                clearInterval(displayInterval); /*停止定时器*/
+                                scrollChatToBottom(); // 滚动到底部
+                                isAnswering = false; /*表示机器人回答完毕*/
 
+                                // 修改发送按钮图标为发送图标
+                                sendButton.style.backgroundColor = "#4caf50";  //改图标为绿颜色
+                                sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>'; //改回发送图标
+                                checkInputValidity(); /*检查输入框状态*/
+                            }
+                        }, 50); // Adjust the interval duration as needed
+                    }
+
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+            scrollChatToBottom(); // 滚动到底部
         }
     }
 
@@ -1611,7 +604,7 @@
     }
 
     /*添加机器人图标*/
-    function appendMessage_bot(sender) {
+    function appendMessage_ai(sender) {
         /*父类容器*/
         var chatBox = document.getElementById("chat-box");
         var messageDiv = document.createElement("div");
@@ -1620,7 +613,7 @@
         messageDiv.classList.add(sender + "-message");
 
         /*这里是编辑对话框的内容*/
-        var message_icon = "<i class='icon fas fa-robot'></i>" + "18" + "<br>";
+        var message_icon = "<i class='icon fas fa-robot'></i>" + "筠筠姐" + "<br>";
         messageDiv.innerHTML = message_icon;
 
         /*父类容器添加子元素*/
@@ -1639,7 +632,7 @@
         messageDiv.classList.add("message");
         messageDiv.classList.add(sender + "-message");
         /*这里是编辑对话框的内容*/
-        var messageContent = "<i class='icon " + (sender === "user" ? "fas fa-user" : "fas fa-robot") + "'></i>" + "<span class='text'>" + (sender === "user" ? "你" : "筠筠姐") + "</span>" + "<br>" + "<p>" + message + "</p>";
+        var messageContent = "<i class='icon " + (sender === "user" ? "fas fa-user" : "fas fa-robot") + "'></i>" + (sender === "user" ? "你" : "筠筠姐") + "<br>" + "<p>" + message + "</p>";
         messageDiv.innerHTML = messageContent;
 
         /*父类容器添加子元素*/
@@ -1648,31 +641,18 @@
 
         // 添加编辑按钮
         if (sender === "user") {
-            // 创建一个外层的 div 元素
-            var buttonWrapper = document.createElement("div");
-
-            // 设置外层 div 的样式，使其占据一行
-            buttonWrapper.style.display = "block";
-            buttonWrapper.style.width = "100%";
-            buttonWrapper.style.height = "10px";
-            // 添加样式类
-            buttonWrapper.classList.add("button-wrapper");
             var editIcon = document.createElement("i");
             editIcon.classList.add("icon", "fas", "fa-pen");
             // 添加 margin-top 样式
             editIcon.style.marginLeft = "20px";
 
             // 设置图标的大小
-            editIcon.style.fontSize = "12px"; // 例如设置为24像素大小
+            editIcon.style.fontSize = "13px"; // 例如设置为24像素大小
 
             editIcon.onclick = function () {
                 editMessage(messageDiv); // 修正这里传递的参数
             };
-            // 将编辑按钮添加到外层 div 中
-            buttonWrapper.appendChild(editIcon);
-
-            // 将外层的 div 添加到消息 div 中
-            messageDiv.appendChild(buttonWrapper);
+            messageDiv.appendChild(editIcon);
         }
         scrollChatToBottom();  /*屏幕滚动到底部*/
     }
@@ -1859,11 +839,18 @@
         var leftContainer = document.getElementById("left-container");
         var openbtnIcon = document.querySelector(".openbtn .fas");
 
-        leftContainer.classList.toggle("active");
+        //如果是小屏幕
+        if (window.matchMedia("(max-width: 768px)").matches) {
+            console.log("进来了修改小屏幕");
+            leftContainer.classList.toggle("open")
+        } else {//如果是大屏幕
+            // 切换侧边栏状态为关闭
+            leftContainer.classList.toggle("closed");
+        }
 
         // 等待一段时间后根据左边容器的展开状态来显示或隐藏覆盖层
         setTimeout(() => {
-            if (leftContainer.classList.contains('active')) {
+            if (leftContainer.classList.contains('open')) {
                 overlay.style.display = "block";
             } else {
                 overlay.style.display = "none"
@@ -1872,7 +859,7 @@
 
 
         // 切换按钮图标
-        if (leftContainer.classList.contains("active")) {
+        if (leftContainer.classList.contains("closed")) {
             // 侧边栏收起时，按钮图标变为向右箭头
             openbtnIcon.classList.remove("fa-chevron-left");
             openbtnIcon.classList.add("fa-chevron-right");
