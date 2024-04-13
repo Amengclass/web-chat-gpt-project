@@ -1678,6 +1678,10 @@
             //设置图标id
             editIcon.id = "editIcon";
             editIcon.onclick = function () {
+                //设置编辑框光标
+                var messageParagraph = messageDiv.querySelector("p");
+                set_cursor(messageParagraph);
+
                 //隐藏编辑按钮
                 editIcon.classList.toggle('hiden');
                 //关闭悬停显示
@@ -1702,7 +1706,7 @@
             // 查找保存按钮
             var savebtn = editContainer.querySelector("#saveButton");
             // 查找取消按钮
-            var cancelbtn =editContainer.querySelector("#cancelButton");
+            var cancelbtn = editContainer.querySelector("#cancelButton");
             if (savebtn && cancelbtn) {
                 savebtn.style.display = "flex";
                 cancelbtn.style.display = "flex";
@@ -1760,26 +1764,31 @@
             // 这里假设您有一个名为 messageDiv 的父容器
             messageDiv.appendChild(buttonContainer);
 
-            // 这里是编辑框部分
-            messageParagraph.contentEditable = true;
-            messageParagraph.focus(); // 让编辑框获得焦点
-
-            // 将光标移到文本末尾
-            var range = document.createRange();
-            range.selectNodeContents(messageParagraph);
-            range.collapse(false); // 将光标移动到末尾
-            var selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            // 设置光标颜色为黑色
-            messageParagraph.style.caretColor = "black";
-
-            // 移除编辑框的外边框
-            messageParagraph.style.outline = "none";
+            set_cursor(messageParagraph);
         }
 
     }
+    //设置编辑框光标
+    function set_cursor(messageParagraph) {
+        // 这里是编辑框部分
+        messageParagraph.contentEditable = true;
+        messageParagraph.focus(); // 让编辑框获得焦点
+
+        // 将光标移到文本末尾
+        var range = document.createRange();
+        range.selectNodeContents(messageParagraph);
+        range.collapse(false); // 将光标移动到末尾
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        // 设置光标颜色为黑色
+        messageParagraph.style.caretColor = "black";
+
+        // 移除编辑框的外边框
+        messageParagraph.style.outline = "none";
+    }
+
 
     // 保存并提交按钮的函数
     function saveAndSubmit(content, saveButton, cancelButton) {
